@@ -1,64 +1,429 @@
----
-layout: default
-title: Adversarial Attacks in the Audio Domain
----
-<div class="blurb">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Adversarial Attacks in the Audio Domain</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylebiblio.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/ir_thin.ico">
+	<style>
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Lato", sans-serif
+        }
 
-	<!--
-	 Sticky navbar with hover animations: https://galgreshler.github.io/Catch-A-Waveform/#
-	 Colored header section with github & colab links: https://galgreshler.github.io/Catch-A-Waveform/#
+        .w3-bar, h1, button {
+            font-family: "Montserrat", sans-serif
+        }
 
-	 -->
+        .w3-content {
+            max-width: 1280px;
+        }
 
-	<p style="text-align: justify;">
-		In recent years, voice-based systems for authentication and control have been widely adopted in products such as mobile devices (e.g. Google Assistant), household appliances (e.g. Amazon Alexa), vehicles (e.g. Tesla Voice Commands), and remote transaction interfaces (e.g. Chase Voice ID). Deep neural networks achieve state-of-the-art performance on many audio tasks, including speech command recognition \cite{tang2018deep, sainath2015kw} and speaker recognition \cite{snyder2018xv, chung2020in}, and  as a result have been incorporated into numerous such systems \cite{marchi2018siri, tang2019media, wu2018ww}. While deep networks are powerful classifiers, they are known to be vulnerable to adversarial examples, artificially-generated perturbations of natural instances that cause a network to make incorrect predictions \cite{szegedy2014intriguing}. This vulnerability presents an opportunity for malicious actors to gain access to and influence the behavior of products like those mentioned above by surreptitiously passing adversarially-crafted audio to the underlying neural network systems.
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+            text-align: center
+        }
 
-The research community has developed a number of audio-domain adversarial attacks to evaluate the robustness of deep neural networks in tasks such as speech command recognition \cite{li2020pulse, li2019music}, speaker recognition and verification \cite{li2020pulse, shamsabadi2021foolhd, zhang2021speaker, wang2020inaudible}, and automatic speech recognition \cite{carlini2018aae, qin2019attack, tao2020metamorph, nekhara2019universal}. Following Carlini \& Wagner \cite{carlini2018aae}, many attacks adopt the standard image-domain approach of leveraging gradient information from the victim model or a similarly-constructed \textit{surrogate} model in order to optimize a small additive perturbation of a benign instance. The perturbed instance is then fed to the victim model, producing a general misclassification (in the case of an \textit{untargeted} attack) or a specific prediction chosen by the attacker (in the case of a \textit{targeted} attack).
+        /* Clear floats after image containers */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
 
+		/* NU purple color scheme */
+		.light-purple, .hover-light-purple:hover{color:#000!important;background-color:#9f76de!important}
+		.northwestern-purple, .hover-northwestern-purple:hover{color:#fff!important;background-color:#4E2A84!important}
 
-Audio adversarial attacks typically optimize an additive perturbation of a benign input directly at the waveform representation. To ensure the attack remains inconspicuous to human listeners, the perturbation is often constrained in terms of a $p$-norm magnitude or through the use of an auxiliary loss function during optimization. Existing attacks can successfully balance the conspicuousness of perturbations against their effectiveness in an \textit{over-the-line} setting, where the attack audio can be fed directly to the victim model over a purely digital channel \cite{qin2019attack, shamsabadi2021foolhd}.
+		/* for buttons */
+		.black-white, .hover-black-white:hover{
+			color:#fff!important;background-color:#000!important}
+		.w3-button:hover{color:#000!important;background-color:#fff!important}
 
-In many practical scenarios an attacker lacks such direct access and instead must craft adversarial examples in an \textit{over-the-air} setting, where malicious audio is played through a speaker and received by a microphone before entering the victim model. The adversarial audio is therefore subject to various distortions introduced by the acoustic environment, such as background noise and reverberation, as well as to those introduced by the physical properties of the speaker and microphone. Today's waveform-additive attacks require large-magnitude perturbations to achieve high success rates in an over-the-air setting \cite{qin2019attack, tao2020metamorph}. Consequently, the perturbations introduced by these attacks often become clearly audible as noise when deployed in practical scenarios.
-
-Recent works have sought to conceal over-the-air attacks through the use of short \textit{universal} perturbations, adversarial sounds that can be played as a separate source simultaneously with live speech \cite{li2020pulse, xie2020speaker, zhang2021speaker}. In the case of Li et al. \cite{li2020pulse}, these perturbations can be disguised as environmental sounds (e.g. phone notifications). However, these attacks still optimize perturbations directly at the waveform, which can result in characteristic noise-like artifacts. Existing attacks at non-waveform representations either produce conspicuous, highly particular sounds \cite{li2019music} or are not demonstrated over-the-air \cite{shamsabadi2021foolhd}.
-
-In the image domain, researchers have sought to address an analogous perceptibility/effectiveness trade-off by moving away from bounded additive perturbations in pixel space. Instead, recent works use differentiable parametric transformations to modify the content of benign images in ways that, while perceptible, may be explained away as natural artifacts of the photographic process (e.g. motion-blur \cite{guo2020blur}, shadows \cite{ghiasi2020shadow}, and color adjustment \cite{bhattad2020unrestricted, hosseini2018semantic}). The resulting perturbations remain inconspicuous despite large $p$-norm magnitudes, allowing for more potent attacks. However, the transformations employed are specific to the image domain.
-
-
-		Recently, audio-domain adversarial attacks have been developed to evaluate the robustness of deep neural networks in tasks such as speech command recognition \cite{li2020pulse, li2019music}, speaker recognition \cite{shamsabadi2021foolhd, li2020pulse, kreuk2018speaker, abdullah2019speaker, xie2020speaker, zhang2021speaker}, automatic speech recognition \cite{carlini2018aae, qin2019attack, chen2020devil, tao2020metamorph, schonherr2020imperio, nekhara2019universal}, and copyright detection \cite{saadatpanah2020copyright}. Following \cite{carlini2018aae}, many attacks adopt the standard image-domain approach of leveraging gradient information from the victim model or a similarly-constructed \textit{surrogate} model in order to optimize a small additive perturbation of a benign instance. The perturbed instance is then fed to the victim model, producing a general misclassification (in the case of an \textit{untargeted} attack) or a specific prediction chosen by the attacker (in the case of a \textit{targeted} attack).
-
-Existing approaches along these lines struggle to craft targeted attacks that remain simultaneously inconspicuous and effective when operating in realistic scenarios. For instance, expectation-over-transformation hardening \cite{athalye2018robust} has been shown to grant robustness against over-the-air distortions at the expense of audible noise-like perturbations for waveform-additive attacks, even those regularized with a perceptually-informed auxiliary loss \cite{qin2019attack, chen2020devil, tao2020metamorph, schonherr2020imperio}. While many heuristic-driven adversarial defenses have proven ineffective \cite{athalye2018obfuscated, tramer2020adaptive}, attempts to evade audio defenses through the use of direct optimization, differentiable surrogate defenses, or tailored constraints often yield conspicuous noise-like perturbations as well \cite{hussain2021waveguard, zhang2020ipc}.
-
-% progress towards attacks in practical scenarios: this is where you cite the "good" ones including looped universal subsecond
-Recent works have sought to conceal over-the-air attacks through the use of short, looped, \textit{universal} (input-agnostic) perturbations which can be played simultaneously with benign inputs \cite{li2020pulse, xie2020speaker, zhang2021speaker}. In the case of \cite{li2020pulse}, these perturbations can be disguised as environmental sounds (e.g. phone notifications). However, these attacks still optimize perturbations directly at the waveform, which can result in characteristic noise-like artifacts.
-
-Li et al. \cite{li2019music} perform over-the-air attacks on a commercial speech command recognition system by optimizing the parameters of a differentiable Karplus-Strong synthesizer to produce adversarial pluck-like sounds. While this approach avoids the noise-like artifacts introduced by waveform-additive perturbations, the resulting attacks are conspicuous and only shown to be effective in preventing the recognition of a specific command.
-
-Shamsabadi et al. \cite{shamsabadi2021foolhd} also forego direct waveform addition and attack a speaker-recognition system by introducing perturbations in the MDCT domain via a gated convolutional autoencoder. While the resulting attacks are imperceptible, they are not demonstrated in an over-the-air setting or against adversarial defenses.
-
-% NOTE: may need to clear up speaker-recognition vs. automatic speaker verification terminology (the latter implies enrollment phase and thresholded similarity measure, while former can refer to softmax multiclass classification)
-A number of works have proposed attacks against speaker recognition pipelines mimicking the voice authentication systems used in many remote transaction interfaces \cite{zhang2021speaker, kassis2021practical}. In addition to a speaker recognition model, these pipelines may include spoofing countermeasures (defenses designed to detect replayed or manipulated audio), transcription checks via an automatic speech recognition system, and human judges. Zhang et al. \cite{zhang2021speaker} perform an over-the-air universal attack against the speaker recognition component which evades replay-detection by playing alongside benign live speech and preserves the transcription of the live speech under an automatic speech recognition system. Kassis et al. \cite{kassis2021practical} perform an over-the-line impersonation attack in which recordings of a victim are used to train a generative model to produce speech in the victim's voice; adversarial perturbations are then added to the generated speech to attack the speaker recognition and spoofing countermeasure components in tandem while preserving the transcription of the generated speech under an automatic speech recognition system and evading detection by a human judge. In both cases, these pipeline attacks rely on additive perturbations at the waveform to evade one or more system components. Additionally, in the case of \cite{kassis2021practical}, obtaining sufficient audio from the victim to train a generative model may be difficult in practice. While we consider practical obstacles such as over-the-air distortions and an adversarial defense when evaluating our proposed attack, our primary focus is not on replicating a production system but rather demonstrating the potential of adaptive filtering for introducing highly effective and inconspicuous perturbations.
-
-% Consider adding Travers citation: importance of attacking realistic pipelines, complete imperceptibility as a red herring
-
-Finally, existing methods can struggle to balance conspicuousness and effectiveness when attacking undefended but inherently robust models in an over-the-line setting. Saadatpanah et al. \cite{saadatpanah2020copyright} propose an attack on copyright detection systems that rely on spectral-peak-based representations to match audio against a database \cite{wang2003industrial}. The inherent robustness of this representation against low-level noise forces the authors' waveform-additive attack to produce conspicuous perturbations in order to evade the system.
-
-Building on the above works, we aim to craft targeted attacks which introduce strong frequency-domain perturbations capable of withstanding over-the-air distortions and evading adversarial defenses, all while remaining inconspicuous to human listeners.
-
-
-% Others have proposed attacks which apply adversarial perturbations at frequency-domain representations \cite{shamsabadi2021foolhd}, regularized attacks using perceptually-informed auxiliary losses computed on frequency-domain representations \cite{qin2019attack}, and used filtering as a post-processing step to regularize additive perturbations \cite{TODO: CITE LAPLACIAN SMOOTHING PAPER}. However, to the best of our knowledge, ours is the first attack to introduce perturbations through adaptive filtering, and does so while succeeding in challenging real-world settings.
-
-% laplacian image filtering: make sure you get this one right: https://hal.inria.fr/hal-02370202/document
-
-% main image-domain frequency study of adversarial perturbations: https://arxiv.org/pdf/1906.08988.pdf
-
-% paper examining role of spatial frequency in image attacks: https://arxiv.org/pdf/2104.12679.pdf
+		/* space after paragraphs - may need to undo... */
+		.w3-padding-32{
+			padding-bottom:0px!important
+		}
 
 
-	</p>
 
-	<br/>
-	<hr/>
-	<br/>
 
-</div><!-- /.blurb -->
+	</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bibtextohtml.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar northwestern-purple w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large northwestern-purple"
+           href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white"><b>Home</b></a>
+        <a href="#unconditional" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+		   id="unconditional_link"><b>1.</b> What Are Adversarial Examples?</a>
+        <a href="#music" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" id="music_link"><b>2.</b> A Simple Audio-Domain Attack</a>
+        <a href="#be"
+           class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+           id="be_link"><b>3.</b> Simulating Real-World Conditions</a>
+        <a href="#inpainting" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+           id="inpainting_link"><b>4.</b> Defenses</a>
+        <a href="#denoising" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+           id="denoising_link"><b>5.</b> Existing Attacks: A Survey</a>
+        <a href="#limitations"
+           class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+           id="limitations_link"><b>6.</b> Towards Adversarial Robustness for Audio</a>
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+        <a href="#unconditional" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Uncoditional
+            Generation</a>
+        <a href="#music" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Music
+            Variations</a>
+        <a href="#be" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Bandwidth-Extenstion</a>
+        <a href="#inpainting" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Inpainting</a>
+        <a href="#denoising" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Denoising</a>
+        <a href="#limitations" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Limitations</a>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container light-purple w3-center" style="padding: 64px 16px 32px;">
+    <h1 class="w3-margin w3-jumbo w3-hide-small" style="padding-top: 64px">Adversarial Attacks in the Audio Domain</h1>
+    <h1 class="w3-margin w3-hide-large w3-hide-medium" style="font-size: 48px">Adversarial Attacks in the Audio Domain: An Introduction</h1>
+    <p class="w3-xlarge">A Hands-On Introduction in PyTorch</p>
+    <p class="w3-large"><a href="https://oreillyp.github.io" style="color: black">Patrick O'Reilly</a></p>
+
+    <button class="w3-button black-white w3-padding-large w3-large w3-margin-top"
+            onclick="window.open('https://github.com/oreillyp/adv_audio_intro', '_blank')">View on GitHub
+    </button>
+    <button class="w3-button black-white w3-padding-large w3-large w3-margin-top"
+            onclick="window.open('https://arxiv.org/pdf/2106.06426.pdf', '_blank')">Colab Notebook
+    </button>
+    <h6 class="w3-hide-large w3-hide-medium">Audio files may take few seconds to load</h6>
+</header>
+
+<!-- Foreword -->
+<div class="w3-row-padding w3-padding-64 w3-container w3-light-grey">
+    <div class="w3-content">
+        <div>
+            <h1>Foreword</h1>
+			<h5 class="w3-padding-32">In recent years, voice-based systems for authentication and control have been widely adopted in products such as mobile devices (e.g. Google Assistant), household appliances (e.g. Amazon Alexa), vehicles (e.g. Tesla Voice Commands), and remote transaction interfaces (e.g. Chase Voice ID). Moreover, a number of applications rely on accurate recognition of non-speech audio (e.g. automated copyright detection). Deep neural networks achieve state-of-the-art performance on many audio tasks, and  as a result have been incorporated into numerous such systems. While deep networks are powerful classifiers, they are known to be vulnerable to <b>adversarial examples</b>, artificially-generated perturbations of natural instances that cause a network to make incorrect predictions. This vulnerability presents an opportunity for malicious actors to gain access to and influence the behavior of products like those mentioned above by surreptitiously passing adversarially-crafted audio to the underlying neural network systems. <br/><br/>The research community has developed a number of audio-domain adversarial attacks to evaluate the robustness of such neural network systems. In this tutorial, we will explore some of these attack algorithms in the context of a simplified audio classification task. In addition to coding up attacks, we'll examine the difficulties facing attackers in realistic settings, survey existing algorithms, and look at ways in which neural network systems can be made more robust. Unfortunately, the growing size of the adversarial audio literature makes it difficult to give a comprehensive overview of the field while maintaining an introductory focus. In the interest of simplicity, this tutorial focuses on gradient-based test-time attacks, omitting topics like poisoning attacks, side-channel attacks, and black-box attacks (other than transfer attacks).</h5>
+
+        </div>
+    </div>
+</div>
+
+<!-- Image-Domain Intro -->
+<div class="w3-row-padding w3-padding-64 w3-container" id="unconditional">
+    <div class="w3-content">
+        <div>
+            <h1>What Are Adversarial Examples?</h1>
+            <h5 class="w3-text-grey">Unconditional generation of different signal types with arbitrary sizes.</h5>
+            <h5 id="unconditional_music">Monophonic Music</h5>
+            <div class="w3-hide-small">
+                <table id="instruments_table">
+                    <tr>
+                        <th>Instrument</th>
+                        <th>Input (Real)</th>
+                        <th>Fake (20 [sec])</th>
+                        <th>Fake (40 [sec])</th>
+                        <th>Fake (60 [sec])</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="instruments_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_instruments_button">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+
+            <h5 id="unconditional_speech">Speech Signals</h5>
+            <div class="w3-hide-small">
+                <table id="speeches_table">
+                    <tr>
+                        <th style="text-align: center" colspan="1"></th>
+                        <th>Input (Real)</th>
+                        <th>Fake (20 [sec])</th>
+                        <th>Fake (40 [sec])</th>
+                        <th>Fake (60 [sec])</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="speeches_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_speeches_button">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+
+            <h5 id="unconditionl_ambient">Ambient Sounds</h5>
+            <div class="w3-hide-small">
+                <table id="ambient_table">
+                    <tr>
+                        <th style="text-align: center"></th>
+                        <th>Input (Real)</th>
+                        <th>Fake (20 [sec])</th>
+                        <th>Fake (40 [sec])</th>
+                        <th>Fake (60 [sec])</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="ambient_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+
+            <h5 id="rf">Effect of Receptive Field</h5>
+            Demonstration of creating speech signals, with different receptive field sizes.
+            <div class="w3-hide-small">
+                <table id="rf_table">
+                    <tr>
+                        <th style="text-align: center">training length [sec]</th>
+                        <th style="text-align: center">Input (Real)</th>
+                        <th style="text-align: center">Small Receptive Field<br>2[sec]-60[ms]</th>
+                        <th style="text-align: center">Normal Receptive Field<br>4[sec]-120[ms]</th>
+                        <th style="text-align: center">Large Receptive Field<br>8[sec]-240[ms]</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="rf_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+
+<!-- Music Variations -->
+<div class="w3-row-padding w3-padding-64 w3-container w3-light-grey" id="music">
+    <div class="w3-content">
+        <div>
+            <h1>Music Variations</h1>
+            <h5 class="w3-text-grey">Training on famous songs, and then creating different variations on these
+                songs.</h5>
+            <div class="w3-hide-small">
+                <table id="music_table">
+                    <tr>
+                        <th style="text-align: center">Name</th>
+                        <th style="text-align: center">Artist</th>
+                        <th style="text-align: center">Input (Real)</th>
+                        <th style="text-align: center">Fake 1</th>
+                        <th style="text-align: center">Fake 2</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="music_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_music_button">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bandwidth Extension -->
+<div class="w3-row-padding w3-padding-64 w3-container" id="be">
+    <div class="w3-content">
+        <div>
+            <h1>Bandwidth Extension</h1>
+            <h5 class="w3-text-grey">In this section there are bandwidth extention examles on VCTK [3] dataset, compared
+                to TFiLM [2] model. For each examples there are six signals; In the upper row (left to right):
+                low-resolution version, ground-truth high resolution signal, the signal used for training our model
+                (20-25 [sec]); In the lower row: extended with TFiLM model trained on single speaker (30 [min]),
+                extended with TFiLM model trained on multi speaker (600 [min]), extended with our model. </h5>
+            <h5>4Khz -> 16KHz Extensions</h5>
+            <div class="w3-hide-small">
+                <table id="sr_table">
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="sr_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_sr_button">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+
+            <h5>8Khz -> 16KHz Extensions</h5>
+            <h5 class="w3-text-grey">
+                When we perform bandwidth extension for wider-bandwidth inputs, we are able to get much better and
+                clearer
+                results. Here are some examples where the input signals are sampled at 8Khz.
+            </h5>
+            <div class="w3-hide-small">
+                <table id="sr_table_8_to_16">
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="sr_table_8_to_16_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_sr_button_8_to_16">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+
+<!-- Inpainting -->
+<div class="w3-row-padding w3-padding-64 w3-container w3-light-grey" id="inpainting">
+    <div class="w3-content">
+        <div>
+            <h1>Inpainting</h1>
+            <h5 class="w3-text-grey">Completing a missing part in a given signal in rock songs. Comparison between
+                GACELA [1] model (trained on 8 [hours]) and ours (trained on 12 [sec]).</h5>
+            <div class="w3-hide-small">
+                <table id="inpainting_table">
+                    <tr>
+                        <th style="text-align: center">Input</th>
+                        <th style="text-align: center">GT</th>
+                        <th style="text-align: center">GACELA</th>
+                        <th style="text-align: center">Ours</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="inpainting_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button id="add_inpainting_button">Show More Examples</button>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+
+<!-- Denoising -->
+<div class="w3-row-padding w3-padding-64 w3-container" id="denoising">
+    <div class="w3-content">
+        <div>
+            <h1>Denoising</h1>
+            <h5 class="w3-text-grey">In this part, we demonstrate denoising old recording by famous violinist <a
+                    href="https://en.wikipedia.org/wiki/Joseph_Joachim" target="_blank">Joseph Joachim</a>. Click on the
+                play/pause button next to each example. You can switch between the noisy and denoised version by
+                clicking the "switch" button.</h5>
+            <div class="w3-hide-small">
+                <table id="denoising_table">
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="denoising_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+
+            <h1>Denoising Synthesized Noisy Signals</h1>
+            <h5 class="w3-text-grey">In order to measure the SNR improvements of denoised signals, we took a clean
+                recording of Bach's Adagio played by violinist <a href="https://www.youtube.com/watch?v=c3mwVaQIZ1c"
+                                                                  target="_blank">Hilary Hahn</a> and added to it white
+                noise and old <a href="https://freesound.org/people/lollosound/sounds/387005/" target="_blank">gramophone
+                    noise</a> in two noise levels. You can listen to the input and reconstructed sounds, where the SNR
+                levels and noise types are written above the spectrograms.
+            </h5>
+            <div class="w3-hide-small">
+                <table id="denoising_synth_table">
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="denoising_synth_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+
+<!-- Limitations -->
+<div class="w3-row-padding w3-padding-64 w3-container w3-light-grey" id="limitations">
+    <div class="w3-content">
+        <div>
+            <h1>Limitations</h1>
+            <h5 class="w3-text-grey">Here are some examples where our model created signals of degraded quality.</h5>
+            <div class="w3-hide-small">
+                <table id="limitations_table">
+                    <tr>
+                        <th style="text-align: center">Real (Input)</th>
+                        <th style="text-align: center">Fake</th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="w3-hide-large w3-hide-medium ">
+                <table id="limitations_table_small" class="w3-table-all w3-bordered w3-centered">
+                </table>
+            </div>
+            <button onclick="location.href='#'" class="back">Back to Top</button>
+        </div>
+    </div>
+</div>
+<div class="w3-row-padding w3-padding-64 w3-container" id="references">
+    <div class="w3-content">
+        <h1>References</h1>
+        <textarea hidden name="bibtex_input" id="bibtex_input" cols=50 rows=20>
+<?php
+    echo file_get_contents("sm.bib");
+?>
+</textarea>
+        <div id="bibtex_errors"></div>
+        <div class="bibtex_template">
+            <li>
+                <a class="url"><span class="title"></span></a></br>
+                <span class="author"></span></br>
+                <span class="booktitle"></span>
+                <span class="if publisher">
+	<span class="publisher"></span>.
+    </span>
+                <span class="if pages">
+      p. <span class="pages"></span>.
+    </span>
+                <span class="if year">
+    <span class="year"></span></span>
+                </br>
+                <a class="bibtexCodeLink">
+                    [bibtex]
+                </a>
+                </br></br>
+            </li>
+        </div>
+
+        <ol id="bibtex_display">
+        </ol>
+        <h1>Resources</h1>
+        Speeches are taken from <a href="https://millercenter.org/the-presidency/presidential-speeches"
+                                   target="_blank">Miller Center</a> and <a href="https://americanrhetoric.com/"
+                                                                            target="_blank">American Rhetoric</a>
+        websites.
+        <br>
+        Cliparts are taken from <a href="http://clipart-library.com/" target="_blank">Clipart Library</a> website.
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+
+</body>
+</html>
