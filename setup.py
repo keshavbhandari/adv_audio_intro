@@ -4,7 +4,7 @@ with open('README.md') as file:
     long_description = file.read()
 
 setup(
-    name='code',
+    name='examples',
     description='Code for Adversarial Attacks in the Audio Domain: A Hands-On Introduction in PyTorch',
     version='0.0.1',
     author="Patrick O'Reilly",
@@ -16,7 +16,7 @@ setup(
         'matplotlib',
         'numpy'
     ],
-    packages=['code'],
+    packages=['examples'],
     long_description=long_description,
     long_description_content_type='text.markdown',
     keywords=[],
