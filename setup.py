@@ -11,10 +11,10 @@ setup(
     author_email='patrick.oreilly2024@u.northwestern.edu',
     url='https://github.com/oreillyp/adv_audio_intro',
     install_requires=[
-        torch,
-        torchaudio,
-        matplotlib,
-        numpy
+        'torch',
+        'torchaudio',
+        'matplotlib',
+        'numpy'
     ],
     packages=['src'],
     long_description=long_description,
