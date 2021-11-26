@@ -16,7 +16,7 @@ setup(
         'matplotlib',
         'numpy'
     ],
-    packages=['examples', 'examples.models'],
+    packages=['examples'],
     long_description=long_description,
     long_description_content_type='text.markdown',
     keywords=[],
