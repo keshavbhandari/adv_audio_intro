@@ -70,7 +70,7 @@ def train_mnist(
         scheduler.step()
 
     if save_model:
-        torch.save(model.state_dict(), "mnist_cnn.pt")
+        torch.save(model.state_dict(), "../models/mnist_cnn.pt")
 
 
 def test_mnist(model, device, test_loader):
