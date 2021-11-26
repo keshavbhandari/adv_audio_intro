@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('README.md') as file:
     long_description = file.read()
@@ -16,7 +16,7 @@ setup(
         'matplotlib',
         'numpy'
     ],
-    packages=['examples'],
+    packages=['examples', 'examples.models'],
     long_description=long_description,
     long_description_content_type='text.markdown',
     keywords=[],
