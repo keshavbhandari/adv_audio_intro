@@ -1,1 +1,1 @@
-from adv_audio_intro.models.mnist_classifier import MNISTClassifier
+from demo_code.models.mnist_classifier import MNISTClassifier
