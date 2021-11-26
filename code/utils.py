@@ -12,7 +12,7 @@ def train_mnist(
         train_loader,
         test_loader,
         epochs: int = 14,
-        log_interval: int = 10,
+        log_interval: int = 50,
         save_model: bool = True
 ):
     """
@@ -74,7 +74,22 @@ def train_mnist(
 
 
 def test_mnist(model, device, test_loader):
-    pass
+
+    model.eval()  # evaluation mode
+    test_loss = 0
+    correct = 0
+    with torch.no_grad():
+        for data, target in test_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+    test_loss /= len(test_loader.dataset)
+
+    print('\nTest Accuracy: {}/{} ({:.0f}%)\n'.format(
+        correct, len(test_loader.dataset),
+        100. * correct / len(test_loader.dataset)))
 
 
 def load_mnist(train_batch_size: int = 64, test_batch_size: int = 1000):
