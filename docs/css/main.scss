@@ -1,0 +1,616 @@
+---
+# Front matter comment to ensure Jekyll properly reads file.
+---
+
+// Imports
+
+@import
+    // The original imports...
+    "github-markdown",
+    "github",
+	// url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto&family=Roboto+Mono&family=Shippori+Antique+B1&display=swap');
+	url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap')
+;
+
+/*
+
+font-family: 'Lato', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Mono', monospace;
+font-family: 'Shippori Antique B1', sans-serif;
+
+ */
+
+/* Navbar icon styling */
+i.fa-solid,
+i.fas,
+i.fab {
+	position: relative;
+	vertical-align: middle;
+}
+.fa-twitter {
+	color: #222;
+}
+.fa-envelope{
+	color: #222
+}
+/* Change the link color on hover */
+.fa-envelope:hover {
+	color: #666;
+}
+.fa-twitter:hover {
+	color: #666;
+}
+.fa-home{
+	color: #222;
+}
+.fa-home:hover {
+	color: #666;
+}
+
+
+
+// navbar styling
+$header-height: 20rem;  // declare styling variables
+$nav-height:5rem;
+
+*, *:before, *:after { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }
+
+.clearfix { *zoom: 1;
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary { display:block }
+
+button,ul,ol{ margin:0; padding:0; font-weight:normal; font-size:medium; background:none; border:none; }
+
+html,body { margin:0; padding:0; background:#eee; }
+
+header { position:relative; width:100%; height: $header-height;  background: darkviolet center center; background-size:cover; margin-bottom:3rem; }
+#stickyNav {
+	position: absolute;
+	//bottom: 0;
+	width: 100%;
+	height: $nav-height;
+	line-height: $nav-height;
+	background-color:transparent;
+	box-shadow:none;
+	transition: background-color 0.3s ease, box-shadow 0.3s ease;
+	transform: translate3d(0, 0, 0);
+	&.fixed {
+		position: fixed;
+		vertical-align: middle;
+		top: 0;
+		background-color:#FFF;
+		box-shadow: 0 0 0.5rem 0.1rem rgba(0,0,0,0.2);
+		a { color: darkviolet; border-color:#FFF;}
+		h1 { color: darkviolet; width: 100%; vertical-align: middle;}
+	}
+	h1 {
+		float:left;
+		color:#fff;
+		font-size:2.5rem;
+		transition: color .3s ease;
+		width: 50%;
+		word-wrap: break-word;
+	}
+	nav { float:right;
+		a { color:#fff; text-decoration:none; padding:.4rem .8rem; border-bottom:2px solid transparent; transition: color 0.3s ease, border 0.3s ease;
+			&:hover { color:#000; border-color:#000; }
+		}
+	}
+}
+
+.container { width:80%; margin:0 auto; padding:0 30px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+	//margin: 60px auto;
+	width: 100%; // this sets the center column width!
+	font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	line-height: 1.5;
+	font-weight: 300;
+	//background: white;
+	background: #FCFCFC;
+	//background: blueviolet;
+}
+
+
+footer {
+	ul {
+		/*font-family: 'Helvetica', 'Arial', 'Sans-Serif';*/
+		font-family: 'Roboto', sans-serif;
+		padding: 0px;
+		list-style: none;
+		font-weight: bold;
+		li {
+			display: inline;
+			margin-right: 20px;
+		}
+	}
+	/*border-top: 1px solid #d5d5d5;*/
+	font-size: .8em;
+}
+a {
+	text-decoration: none;
+	color: #333;
+	&:hover {
+		text-decoration: underline;
+	}
+	text-align: center;
+	/*vertical-align: middle;*/
+}
+
+
+
+h1 {
+	font-size: 3em;
+	/* font-family: 'Helvetica', 'Arial', 'Sans-Serif'; */
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+
+	//font-weight: bold;
+	letter-spacing: -.1rem;
+	//line-height: 1.25;
+	//color: #263c4c;
+}
+
+h2 {
+	font-size: 2.2em;
+	font-weight: 300;
+	/* font-family: 'Helvetica', 'Arial', 'Sans-Serif'; */
+	font-family: 'Roboto', sans-serif;
+}
+h3 {
+	font-size: 1.8em;
+	font-family: 'Roboto', sans-serif;
+}
+
+// for text on cross-hatching
+h4 span {
+	background-color: #FCFCFC;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+p {
+	font-size: 1.0em;
+	/*font-family: 'Helvetica', 'Arial', 'Sans-Serif';*/
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.4em;
+	//line-height: 1.6em;
+	color: #333;
+
+}
+ul.posts {
+	margin: 20px auto 40px;
+	font-size: 1.5em;
+	li {
+		list-style: none;
+	}
+}
+.markdown-body h1 {
+  font-size: 64px;
+  margin: .67em 0;
+}
+.markdown-body h2 {
+  font-size: 32px;
+  margin: .67em 0;
+}
+
+.markdown-body table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: center;
+  display: table
+}
+.grid-container {
+  display: grid;
+}
+
+.img-circle {
+	border-radius: 50%;
+	border: 1px solid black;
+}
+
+.img-project{
+	width: 100px;
+	height: 100px;
+	min-width:100px;
+	min-height:100px;
+	border-radius: 50%;
+	background-clip: padding-box;
+	margin-left: auto;
+
+	border: 1px solid black;
+
+	/*float: right;*/
+	/*margin: 7px 0 0 5px;*/
+	background-size: cover;
+	background-position: center center;
+}
+
+
+/* ARROWS */
+.arrow-down {
+	color: #222;
+	width:50px;
+	height:30px;
+	display: flex;
+	alignment: center;
+	margin: auto;
+	transform: rotate(90deg) scale(0.4);
+}
+.arrow-down:before {
+	content: "";
+	background: currentColor;
+	width:15px;
+	clip-path: polygon(0 10px,calc(100% - 15px) 10px,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,calc(100% - 15px) calc(100% - 10px),0 calc(100% - 10px));
+	animation: a1 2.5s forwards;
+	animation-delay: 1s;
+}
+.arrow-down-big {
+	color: #222;
+	width:200px;
+	padding-left: 150px;
+	height:30px;
+	display: flex;
+	alignment: center;
+	margin: auto;
+	transform: rotate(90deg) scale(0.4);
+}
+.arrow-down-big:before {
+	content: "";
+	background: currentColor;
+	width:15px;
+	clip-path: polygon(0 10px,calc(100% - 15px) 10px,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,calc(100% - 15px) calc(100% - 10px),0 calc(100% - 10px));
+	animation: a1 2.5s forwards;
+}
+@keyframes a1 {
+	90%,100%{flex-grow: 1}
+}
+
+
+
+
+/* MUSIC PLAYER */
+
+// outer container for player object
+.music-container{
+	//width: 50%;
+	width: 400px;
+	alignment: center;
+	//background-color: rgba(248, 248, 248, .6);
+	//background-color: #f5f5f5;
+	background-color: #FCFCFC;
+	border-radius: 15px;
+	//box-shadow: 0 20px 20px 0 rgba(248, 248, 248, .6);
+	display: flex;
+	padding: 20px 30px;
+	position: relative;
+	//margin: 100px 0;
+	margin: 0 auto;
+	z-index: 99;
+	border: 1px solid black;
+	opacity: 1;
+}
+
+// container for image component
+.img-container {
+	position: relative;
+	width: 120px;
+}
+
+// "center circle" of "record"
+/*
+.img-container::after {
+	content:'';
+	background-color: black;
+	height: 20px;
+	width: 20px;
+	position: absolute;
+	left: 50%;
+	bottom: 50%;
+	border-radius: 50%;
+	transform:translate(-50%, -50%)
+}
+*/
+
+// actual image within container
+.img-container img {
+	width: inherit;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	border: 1px solid black;
+
+	animation: rotate 30s linear infinite;
+	animation-play-state: paused;  // by default, do not rotate unless playing audio
+}
+
+// set image to rotate when animation is active
+.music-container.play .img-container img {
+	animation-play-state: running;
+}
+
+// use keyframes to apply rotation animation
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+// navigation bar for audio player
+.navigation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: -1;
+}
+
+// restart button
+.action-btn {
+	//background-color: rgba(248, 248, 248, .6);
+	background: #FCFCFC;
+	border: 0;
+	color: #333;
+	font-size: 20px;
+	cursor: pointer;
+	padding: 10px;
+	margin: 0 20px;
+}
+
+// play button
+.action-btn-big{
+	//background-color: rgba(248, 248, 248, .6);
+	background: #FCFCFC;
+	border: 0;
+	color: #333;
+	font-size: 30px;
+	cursor: pointer;
+	padding: 10px;
+	margin: 0 20px;
+}
+
+// when clicked, do not show outline
+.action-button:focus {
+	outline: 0;
+}
+
+// when clicked, do not show outline
+.action-button-big:focus {
+	outline: 0;
+}
+
+// fill up player to keep transition in background
+.music-filler {
+	//background: #f8f8f8;
+	//background: rgba(244, 244, 244, 1.0);
+
+	//background: rgba(248, 248, 248, 1.0);
+	//border: 1px solid black;
+
+	background: #FCFCFC;
+	//background: blue;
+	border-radius: 15px 15px 0 0;
+	position: absolute;
+	top: 0;
+	//left: 20px;
+	width:calc(100% - 215px);
+	height:73px;
+	vertical-align: middle;
+	//width: 60%;
+	opacity: 1.0;  // 0.0
+	//margin: 0 auto;
+	padding: 10px 20px 10px 135px;
+	//padding: 0 0 0 150px;
+	//transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+	z-index: -1;
+}
+
+.music-info {
+	//background: #f8f8f8;
+	//background: rgba(244, 244, 244, 1.0);
+
+	//background: rgba(248, 248, 248, 1.0);
+
+	background: linear-gradient(
+									45deg,
+									#333 5%,
+									transparent 5%,
+									transparent 50%,
+									#333 50%,
+									#333 55%,
+									transparent 55%,
+									transparent
+	);
+	background-size: 6px 6px;
+
+
+
+	//border: 1px solid black;
+
+	border-radius: 15px 15px 0 0;
+	position: absolute;
+	top: 0;
+	//left: 20px;
+	width:calc(100% - 215px);
+	//width: 60%;
+	opacity: 0.0;  // 0.0
+	transform: translateY(0%); // 0%
+	//margin: 0 auto;
+	padding: 10px 20px 10px 135px;
+	//padding: 0 0 0 150px;
+	transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+	z-index: -100;
+}
+
+.music-container.play .music-info {
+	opacity: 1;
+	transform: translateY(-101.5%);
+	background: linear-gradient(
+									45deg,
+									#333 5%,
+									transparent 5%,
+									transparent 50%,
+									#333 50%,
+									#333 55%,
+									transparent 55%,
+									transparent
+	);
+	background-size: 6px 6px;
+}
+
+// "unfilled" progress bar
+.progress-container {
+	background: white;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 10px 0;
+	height: 4px;
+	width: 100%;
+	border: 1px solid black;
+}
+
+.progress {
+	background-color: black;
+	border-radius: 5px;
+	height: 100%;
+	width: 0%;  // start with empty progress bar
+	transition: width 0.1s linear;
+}
+
+
+
+/* COLLAPSIBLE RESEARCH SUMMARIES */
+
+/* Invisible checkbox for toggling collapsible content */
+input[type='checkbox'] {
+	display: none;
+}
+
+.lbl-text {
+	position: relative;
+	top: 50%;
+	vertical-align: middle;
+	transform: translateY(-50%);
+}
+
+/* Default styling for collapsible label (project title, etc.) */
+.lbl-toggle {
+	/* display: block;*/
+
+	font-weight: 400;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.4rem;
+	text-transform: uppercase;
+	text-align: left;
+
+	display: flex;
+	align-items: center;
+
+	padding: 1rem;
+
+
+	color: #222;
+	//color: black;
+	//background: #F8F8F8;
+	//background: white;
+	//letter-spacing: -.1rem;
+	background: #FCFCFC;
+
+	cursor: pointer;
+
+	border-radius: 7px;
+	transition: all 0.25s ease-out;
+}
+
+/* Toggle color change in label text with rollover */
+.lbl-toggle:hover {
+	color: #666;
+}
+
+/* Format arrow indicator in collapsible label */
+.lbl-toggle::before {
+	content: ' ';
+	display: inline-block;
+
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid currentColor;  /* Assign text color to arrow */
+
+	vertical-align: middle;
+	margin-right: .7rem;
+	transform: translateY(-2px);
+
+	transition: transform .2s ease-out;
+}
+
+/* Format drop-down content upon expansion */
+.collapsible-content .content-inner {
+	background: rgba(248, 248, 248, .6);
+	/*background: rgba(175,184,193,0.2);*/
+	width: 97%;
+	text-align: justify;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	padding: .5rem 1rem;
+	margin: 0 auto;
+}
+
+/* Default height of collapsed content to zero, hiding it */
+.collapsible-content {
+	max-height: 0px;
+	//overflow-y: auto;
+	overflow: hidden;
+	display: inline-block;
+	transition: max-height .25s ease-in-out, display .5s ease-in-out; /* Expand to show all content */
+}
+
+/* Link checkbox to collapsible */
+.toggle:checked + .lbl-toggle + .collapsible-content {
+	max-height: 100vh;
+	display: table;
+	//overflow: visible;
+}
+
+/* Link checkbox to arrow rotation */
+.toggle:checked + .lbl-toggle::before {
+	transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle:checked + .lbl-toggle {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+
+/* Media player */

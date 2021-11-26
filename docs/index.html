@@ -1,0 +1,64 @@
+---
+layout: default
+title: Adversarial Attacks in the Audio Domain
+---
+<div class="blurb">
+
+	<!--
+	 Sticky navbar with hover animations: https://galgreshler.github.io/Catch-A-Waveform/#
+	 Colored header section with github & colab links: https://galgreshler.github.io/Catch-A-Waveform/#
+
+	 -->
+
+	<p style="text-align: justify;">
+		In recent years, voice-based systems for authentication and control have been widely adopted in products such as mobile devices (e.g. Google Assistant), household appliances (e.g. Amazon Alexa), vehicles (e.g. Tesla Voice Commands), and remote transaction interfaces (e.g. Chase Voice ID). Deep neural networks achieve state-of-the-art performance on many audio tasks, including speech command recognition \cite{tang2018deep, sainath2015kw} and speaker recognition \cite{snyder2018xv, chung2020in}, and  as a result have been incorporated into numerous such systems \cite{marchi2018siri, tang2019media, wu2018ww}. While deep networks are powerful classifiers, they are known to be vulnerable to adversarial examples, artificially-generated perturbations of natural instances that cause a network to make incorrect predictions \cite{szegedy2014intriguing}. This vulnerability presents an opportunity for malicious actors to gain access to and influence the behavior of products like those mentioned above by surreptitiously passing adversarially-crafted audio to the underlying neural network systems.
+
+The research community has developed a number of audio-domain adversarial attacks to evaluate the robustness of deep neural networks in tasks such as speech command recognition \cite{li2020pulse, li2019music}, speaker recognition and verification \cite{li2020pulse, shamsabadi2021foolhd, zhang2021speaker, wang2020inaudible}, and automatic speech recognition \cite{carlini2018aae, qin2019attack, tao2020metamorph, nekhara2019universal}. Following Carlini \& Wagner \cite{carlini2018aae}, many attacks adopt the standard image-domain approach of leveraging gradient information from the victim model or a similarly-constructed \textit{surrogate} model in order to optimize a small additive perturbation of a benign instance. The perturbed instance is then fed to the victim model, producing a general misclassification (in the case of an \textit{untargeted} attack) or a specific prediction chosen by the attacker (in the case of a \textit{targeted} attack).
+
+
+Audio adversarial attacks typically optimize an additive perturbation of a benign input directly at the waveform representation. To ensure the attack remains inconspicuous to human listeners, the perturbation is often constrained in terms of a $p$-norm magnitude or through the use of an auxiliary loss function during optimization. Existing attacks can successfully balance the conspicuousness of perturbations against their effectiveness in an \textit{over-the-line} setting, where the attack audio can be fed directly to the victim model over a purely digital channel \cite{qin2019attack, shamsabadi2021foolhd}.
+
+In many practical scenarios an attacker lacks such direct access and instead must craft adversarial examples in an \textit{over-the-air} setting, where malicious audio is played through a speaker and received by a microphone before entering the victim model. The adversarial audio is therefore subject to various distortions introduced by the acoustic environment, such as background noise and reverberation, as well as to those introduced by the physical properties of the speaker and microphone. Today's waveform-additive attacks require large-magnitude perturbations to achieve high success rates in an over-the-air setting \cite{qin2019attack, tao2020metamorph}. Consequently, the perturbations introduced by these attacks often become clearly audible as noise when deployed in practical scenarios.
+
+Recent works have sought to conceal over-the-air attacks through the use of short \textit{universal} perturbations, adversarial sounds that can be played as a separate source simultaneously with live speech \cite{li2020pulse, xie2020speaker, zhang2021speaker}. In the case of Li et al. \cite{li2020pulse}, these perturbations can be disguised as environmental sounds (e.g. phone notifications). However, these attacks still optimize perturbations directly at the waveform, which can result in characteristic noise-like artifacts. Existing attacks at non-waveform representations either produce conspicuous, highly particular sounds \cite{li2019music} or are not demonstrated over-the-air \cite{shamsabadi2021foolhd}.
+
+In the image domain, researchers have sought to address an analogous perceptibility/effectiveness trade-off by moving away from bounded additive perturbations in pixel space. Instead, recent works use differentiable parametric transformations to modify the content of benign images in ways that, while perceptible, may be explained away as natural artifacts of the photographic process (e.g. motion-blur \cite{guo2020blur}, shadows \cite{ghiasi2020shadow}, and color adjustment \cite{bhattad2020unrestricted, hosseini2018semantic}). The resulting perturbations remain inconspicuous despite large $p$-norm magnitudes, allowing for more potent attacks. However, the transformations employed are specific to the image domain.
+
+
+		Recently, audio-domain adversarial attacks have been developed to evaluate the robustness of deep neural networks in tasks such as speech command recognition \cite{li2020pulse, li2019music}, speaker recognition \cite{shamsabadi2021foolhd, li2020pulse, kreuk2018speaker, abdullah2019speaker, xie2020speaker, zhang2021speaker}, automatic speech recognition \cite{carlini2018aae, qin2019attack, chen2020devil, tao2020metamorph, schonherr2020imperio, nekhara2019universal}, and copyright detection \cite{saadatpanah2020copyright}. Following \cite{carlini2018aae}, many attacks adopt the standard image-domain approach of leveraging gradient information from the victim model or a similarly-constructed \textit{surrogate} model in order to optimize a small additive perturbation of a benign instance. The perturbed instance is then fed to the victim model, producing a general misclassification (in the case of an \textit{untargeted} attack) or a specific prediction chosen by the attacker (in the case of a \textit{targeted} attack).
+
+Existing approaches along these lines struggle to craft targeted attacks that remain simultaneously inconspicuous and effective when operating in realistic scenarios. For instance, expectation-over-transformation hardening \cite{athalye2018robust} has been shown to grant robustness against over-the-air distortions at the expense of audible noise-like perturbations for waveform-additive attacks, even those regularized with a perceptually-informed auxiliary loss \cite{qin2019attack, chen2020devil, tao2020metamorph, schonherr2020imperio}. While many heuristic-driven adversarial defenses have proven ineffective \cite{athalye2018obfuscated, tramer2020adaptive}, attempts to evade audio defenses through the use of direct optimization, differentiable surrogate defenses, or tailored constraints often yield conspicuous noise-like perturbations as well \cite{hussain2021waveguard, zhang2020ipc}.
+
+% progress towards attacks in practical scenarios: this is where you cite the "good" ones including looped universal subsecond
+Recent works have sought to conceal over-the-air attacks through the use of short, looped, \textit{universal} (input-agnostic) perturbations which can be played simultaneously with benign inputs \cite{li2020pulse, xie2020speaker, zhang2021speaker}. In the case of \cite{li2020pulse}, these perturbations can be disguised as environmental sounds (e.g. phone notifications). However, these attacks still optimize perturbations directly at the waveform, which can result in characteristic noise-like artifacts.
+
+Li et al. \cite{li2019music} perform over-the-air attacks on a commercial speech command recognition system by optimizing the parameters of a differentiable Karplus-Strong synthesizer to produce adversarial pluck-like sounds. While this approach avoids the noise-like artifacts introduced by waveform-additive perturbations, the resulting attacks are conspicuous and only shown to be effective in preventing the recognition of a specific command.
+
+Shamsabadi et al. \cite{shamsabadi2021foolhd} also forego direct waveform addition and attack a speaker-recognition system by introducing perturbations in the MDCT domain via a gated convolutional autoencoder. While the resulting attacks are imperceptible, they are not demonstrated in an over-the-air setting or against adversarial defenses.
+
+% NOTE: may need to clear up speaker-recognition vs. automatic speaker verification terminology (the latter implies enrollment phase and thresholded similarity measure, while former can refer to softmax multiclass classification)
+A number of works have proposed attacks against speaker recognition pipelines mimicking the voice authentication systems used in many remote transaction interfaces \cite{zhang2021speaker, kassis2021practical}. In addition to a speaker recognition model, these pipelines may include spoofing countermeasures (defenses designed to detect replayed or manipulated audio), transcription checks via an automatic speech recognition system, and human judges. Zhang et al. \cite{zhang2021speaker} perform an over-the-air universal attack against the speaker recognition component which evades replay-detection by playing alongside benign live speech and preserves the transcription of the live speech under an automatic speech recognition system. Kassis et al. \cite{kassis2021practical} perform an over-the-line impersonation attack in which recordings of a victim are used to train a generative model to produce speech in the victim's voice; adversarial perturbations are then added to the generated speech to attack the speaker recognition and spoofing countermeasure components in tandem while preserving the transcription of the generated speech under an automatic speech recognition system and evading detection by a human judge. In both cases, these pipeline attacks rely on additive perturbations at the waveform to evade one or more system components. Additionally, in the case of \cite{kassis2021practical}, obtaining sufficient audio from the victim to train a generative model may be difficult in practice. While we consider practical obstacles such as over-the-air distortions and an adversarial defense when evaluating our proposed attack, our primary focus is not on replicating a production system but rather demonstrating the potential of adaptive filtering for introducing highly effective and inconspicuous perturbations.
+
+% Consider adding Travers citation: importance of attacking realistic pipelines, complete imperceptibility as a red herring
+
+Finally, existing methods can struggle to balance conspicuousness and effectiveness when attacking undefended but inherently robust models in an over-the-line setting. Saadatpanah et al. \cite{saadatpanah2020copyright} propose an attack on copyright detection systems that rely on spectral-peak-based representations to match audio against a database \cite{wang2003industrial}. The inherent robustness of this representation against low-level noise forces the authors' waveform-additive attack to produce conspicuous perturbations in order to evade the system.
+
+Building on the above works, we aim to craft targeted attacks which introduce strong frequency-domain perturbations capable of withstanding over-the-air distortions and evading adversarial defenses, all while remaining inconspicuous to human listeners.
+
+
+% Others have proposed attacks which apply adversarial perturbations at frequency-domain representations \cite{shamsabadi2021foolhd}, regularized attacks using perceptually-informed auxiliary losses computed on frequency-domain representations \cite{qin2019attack}, and used filtering as a post-processing step to regularize additive perturbations \cite{TODO: CITE LAPLACIAN SMOOTHING PAPER}. However, to the best of our knowledge, ours is the first attack to introduce perturbations through adaptive filtering, and does so while succeeding in challenging real-world settings.
+
+% laplacian image filtering: make sure you get this one right: https://hal.inria.fr/hal-02370202/document
+
+% main image-domain frequency study of adversarial perturbations: https://arxiv.org/pdf/1906.08988.pdf
+
+% paper examining role of spatial frequency in image attacks: https://arxiv.org/pdf/2104.12679.pdf
+
+
+	</p>
+
+	<br/>
+	<hr/>
+	<br/>
+
+</div><!-- /.blurb -->

@@ -9,3 +9,5 @@
 <p align="center"><img src="./figs/filters.png" /></p>
 
 ---
+
+The companion repository for [this tutorial on audio adversarial examples](https://oreillyp.github.io/adv_audio_intro), containing basic attacks, models, and utilities.

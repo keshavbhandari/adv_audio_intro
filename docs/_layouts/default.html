@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>{{ page.title }}</title>
+			<!-- link to main stylesheet -->
+			<link rel="stylesheet" type="text/css" href="/css/main.css">
+			<!-- for latex style, swap href for https://latex.now.sh/style.min.css -->
+			<link rel="shortcut icon" type="image/x-icon" href="assets/ir_thin.ico">
+
+			<!-- code for FontAwesome icon use -->
+			<script src="https://kit.fontawesome.com/60192a4d25.js" crossorigin="anonymous"></script>
+
+		</head>
+		<body>
+			<!-- sticky navbar -->
+			<header>
+				<div id="stickyNav">
+					<div class="container clearfix">
+						<h1 id="logo" class="title">Adversarial Attacks in the Audio Domain: An Introduction</h1>
+						<nav>
+							<a href="#">Home</a>
+							<a href="#">Crafting Adversarial Examples</a>
+							<a href="#">Audio</a>
+							<a href="#">Simulating Real-World Environments</a>
+							<a href="#">Defenses</a>
+							<a href="#">Existing Attacks: A Survey</a>
+						</nav>
+					</div>
+				</div>
+			</header>
+
+			<div class="container">
+			
+			{{ content }}
+			
+			</div><!-- /.container -->
+			<footer>
+			</footer>
+			<br/>
+			{% include open-embed.html %}
+		</body>
+	</html>
+<script src="/script.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
