@@ -5,6 +5,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 def plot_mnist(x, y, model):
