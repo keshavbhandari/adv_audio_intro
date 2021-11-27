@@ -31,7 +31,7 @@ def plot_mnist(x, y, model):
     linewidth = 2.0
 
     # image plot
-    axs[0].imshow(x.squeeze(0).numpy(), cmap='gray')
+    axs[0].imshow(x.squeeze().numpy(), cmap='gray')
 
     # class scores plot
     axs[1].bar(
