@@ -9,10 +9,18 @@ import matplotlib.pyplot as plt
 
 
 def plot_mnist(x, y, model):
+    """
+    Plot grayscale image and class scores side-by-side
+
+    :param x:
+    :param y:
+    :param model:
+    :return:
+    """
 
     # use model to compute class scores and predicted label
     y_scores = torch.nn.functional.softmax(
-        model(x.unsqueeze(0)), dim=-1
+        model(x.reshape(1, 1, 28, 28)), dim=-1
     )
     y_pred = y_scores.argmax()
 
@@ -59,7 +67,8 @@ def train_mnist(
         save_model: bool = True
 ):
     """
-    Train a simple MNIST classifier.
+    Train a simple MNIST classifier. MNIST classification code adapted from
+    https://github.com/pytorch/examples/blob/master/mnist/main.py
 
     :param model:
     :param device:
@@ -117,6 +126,10 @@ def train_mnist(
 
 
 def test_mnist(model, device, test_loader):
+    """
+    Evaluate a simple MNIST classifier. MNIST classification code adapted from
+    https://github.com/pytorch/examples/blob/master/mnist/main.py
+    """
 
     model.eval()  # evaluation mode
     test_loss = 0
@@ -137,7 +150,8 @@ def test_mnist(model, device, test_loader):
 
 def load_mnist(train_batch_size: int = 64, test_batch_size: int = 1000):
     """
-    Load MNIST dataset
+    Load MNIST dataset. MNIST classification code adapted from
+    https://github.com/pytorch/examples/blob/master/mnist/main.py
     :return: train and test DataLoader objects
     """
 
