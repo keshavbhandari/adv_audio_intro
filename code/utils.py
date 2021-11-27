@@ -4,6 +4,48 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
+import seaborn as sns
+
+
+def plot_mnist(x, y, model):
+
+    # use model to compute class scores and predicted label
+    y_scores = torch.nn.functional.softmax(
+        model(x.unsqueeze(0)), dim=-1
+    )
+    y_pred = y_scores.argmax()
+
+    # initialize plot
+    fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(6, 2.5))
+    width = 0.5
+    margin = 0.0025
+    linewidth = 2.0
+
+    # image plot
+    axs[0].imshow(x.squeeze(0).numpy(), cmap='gray')
+
+    # class scores plot
+    axs[1].bar(
+        list(range(0, 10)),
+        y_scores.flatten().detach().cpu().numpy(),
+        width,
+        color='black',
+        label='class scores',
+        edgecolor='black',
+        linewidth=linewidth
+    )
+
+    # formatting
+    fig.suptitle(f"True Label: {y}, Predicted Label: {y_pred}", y=1.1)
+    axs[1].grid(False)
+    axs[1].spines['left'].set_linewidth(linewidth)
+    axs[1].set_xlim(-1, 10)
+    axs[1].tick_params(bottom=True, left=True)
+    axs[1].set_yscale('log')
+    axs[1].set_xticks(list(range(0, 10)))
+    sns.despine(bottom=True)
+    plt.tight_layout()
+    plt.show()
 
 
 def train_mnist(
