@@ -18,6 +18,10 @@ def plot_mnist(x, y, model):
     :return:
     """
 
+    x = x.clone().detach().cpu()
+    if isinstance(y, torch.Tensor):
+        y = y.clone().detach().cpu()
+
     # use model to compute class scores and predicted label
     y_scores = torch.nn.functional.softmax(
         model(x.reshape(1, 1, 28, 28)), dim=-1
