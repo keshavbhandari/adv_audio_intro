@@ -20,7 +20,7 @@ import IPython.display as ipd
 
 
 def play_audiomnist(x):
-    ipd.Audio(x.detach().cpu().numpy().flatten(), rate=16000)  # load a NumPy array
+    return ipd.Audio(x.detach().cpu().numpy().flatten(), rate=16000)  # load a NumPy array
 
 
 def plot_audiomnist(x, y, model):
