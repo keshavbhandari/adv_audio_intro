@@ -1,4 +1,6 @@
+tqdm
 torch
+librosa
 torchaudio
 torchvision
 matplotlib
