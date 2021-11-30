@@ -21,15 +21,111 @@ def plot_audiomnist(x, y, model):
     pass
 
 
-def train_audiomnist(x, y, model):
-    pass
+def train_audiomnist(model,
+                     device,
+                     train_loader,
+                     test_loader,
+                     epochs: int = 14,
+                     save_model: bool = True
+                     ):
+    optimizer = torch.optim.SGD(
+        model.parameters(), lr=0.001, momentum=0.9
+    )
+    scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer,
+        step_size=1,
+        gamma=1.0
+    )
+
+    criterion = torch.nn.CrossEntropyLoss()
+
+    best_acc = 0.0
+
+    for epoch in range(epochs):
+
+        # track loss
+        training_loss = 0.0
+        validation_loss = 0
+
+        # track accuracy
+        correct = 0
+        total = 0
+
+        pbar = tqdm(train_loader, total=len(train_loader))
+
+        model.train()
+        for batch_idx, batch_data in enumerate(pbar):
+
+            pbar.set_description(
+                f'Epoch {epoch + 1}, batch {batch_idx + 1}/{len(train_loader)}')
+
+            inputs, labels = batch_data
+
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            # forward + backward + optimize
+            optimizer.zero_grad()
+            outputs = model(inputs)
+
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            # sum training loss
+            training_loss += loss.item()
+
+        model.eval()
+        with torch.no_grad():
+
+            pbar = tqdm(test_loader, total=len(test_loader))
+            for batch_idx, batch_data in enumerate(pbar):
+
+                pbar.set_description(
+                    f'Validation, batch {batch_idx + 1}/{len(test_loader)}')
+
+                inputs, labels = batch_data
+
+                inputs = inputs.to(device)
+                labels = labels.to(device)
+
+                outputs = model(inputs)
+
+                loss = criterion(outputs, labels)
+
+                # sum validation loss
+                validation_loss += loss.item()
+
+                # calculate validation accuracy
+                preds = torch.max(outputs.data, 1)[1]
+
+                total += labels.size(0)
+                correct += (preds == labels).sum().item()
+
+        # calculate final metrics
+        validation_loss /= len(test_loader)
+        training_loss /= len(train_loader)
+        accuracy = 100 * correct / total
+
+        # if best model thus far, save
+        if accuracy > best_acc and save_model:
+            print(f"New best accuracy: {accuracy}; saving model")
+            best_model = copy.deepcopy(model.state_dict())
+            best_acc = accuracy
+            torch.save(
+                best_model,
+                "audionet.pt"
+            )
+
+        # update step-size scheduler
+        scheduler.step()
 
 
 def test_audiomnist(x, y, model):
     pass
 
 
-def load_audiomnist(data_dir, train_batch_size: int = 64, test_batch_size: int = 1000):
+def load_audiomnist(data_dir, train_batch_size: int = 64, test_batch_size: int = 128):
 
     audio_list = sorted(list(Path(data_dir).rglob(f'*.wav')))
     cache_list = sorted(list(Path(data_dir).rglob('*.pt')))  # check for cached dataset
