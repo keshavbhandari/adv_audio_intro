@@ -1,9 +1,10 @@
 <h1 align="center">Adversarial Attacks in the Audio Domain: An Introduction</h1>
 <hr/>
 
-<div style="text-align: center">
-<a href="https://colab.research.google.com/drive/1tb7JnrJHOBP0BkOKWXzP06jYrIXVf3az?usp=sharing"><h3>Colab Notebook</h3></a>
-</div>
+<h3 align="center">
+<a href="https://colab.research.google.com/drive/1tb7JnrJHOBP0BkOKWXzP06jYrIXVf3az?usp=sharing">Colab Notebook</a>
+</h3>
+
 
 ---
 
