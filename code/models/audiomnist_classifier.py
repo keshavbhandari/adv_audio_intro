@@ -94,7 +94,7 @@ class CNN(nn.Module):
         return x
 
 
-class AudioNet(Model):
+class AudioNet(nn.Module):
     """
     Wrapper for AudioNet waveform convolutional model proposed in Becker et al.
     (https://arxiv.org/abs/1807.03418), with normalization preprocessing. Code

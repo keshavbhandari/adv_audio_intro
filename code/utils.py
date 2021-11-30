@@ -35,8 +35,8 @@ def load_audiomnist(data_dir, train_batch_size: int = 64, test_batch_size: int =
     cache_list = sorted(list(Path(data_dir).rglob('*.pt')))  # check for cached dataset
 
     if len(cache_list) > 0:
-        tx = torch.load(path.join(data_dir, 'audiomnist_tx.pt'))
-        ty = torch.load(path.join(data_dir, 'audiomnist_ty.pt'))
+        tx = torch.load(os.path.join(data_dir, 'audiomnist_tx.pt'))
+        ty = torch.load(os.path.join(data_dir, 'audiomnist_ty.pt'))
 
     else:
         tx = torch.zeros((len(audio_list), 1, 16000))
@@ -72,10 +72,10 @@ def load_audiomnist(data_dir, train_batch_size: int = 64, test_batch_size: int =
         tx_train.append(tx_i[:split]), ty_train.append(ty_i[:split])
         tx_test.append(tx_i[split:]), ty_test.append(ty_i[split:])
 
-    tx_train = torch.stack(tx_train, dim=0)
-    ty_train = torch.stack(ty_train, dim=0)
-    tx_test = torch.stack(tx_test, dim=0)
-    ty_test = torch.stack(ty_test, dim=0)
+    tx_train = torch.cat(tx_train, dim=0)
+    ty_train = torch.cat(ty_train, dim=0)
+    tx_test = torch.cat(tx_test, dim=0)
+    ty_test = torch.cat(ty_test, dim=0)
 
     # create datasets
     train_data = torch.utils.data.TensorDataset(tx_train, ty_train)
