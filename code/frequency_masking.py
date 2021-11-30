@@ -7,7 +7,10 @@ from typing import Optional, List, Union, Tuple, TYPE_CHECKING
 
 
 class FrequencyMaskingLoss(nn.Module):
-
+    """
+    Adapted from Adversarial Robustness Toolkit (ART) implementation of Qin et al.
+    frequency-masking attack (ICML, 2019). See: https://bit.ly/3lmmNXn
+    """
     def __init__(self,
                  alpha: Union[float, torch.Tensor] = 1e-6,
                  window_size: int = 2048,
