@@ -122,8 +122,39 @@ def train_audiomnist(model,
         scheduler.step()
 
 
-def test_audiomnist(x, y, model):
-    pass
+def test_audiomnist(model, device, test_loader):
+
+    model.to(device)
+    model.eval()
+
+    # track accuracy
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+
+        pbar = tqdm(test_loader, total=len(test_loader))
+        for batch_idx, batch_data in enumerate(pbar):
+
+            pbar.set_description(
+                f'Validation, batch {batch_idx + 1}/{len(test_loader)}')
+
+            inputs, labels = batch_data
+
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            outputs = model(inputs)
+
+            # calculate validation accuracy
+            preds = torch.max(outputs.data, 1)[1]
+
+            total += labels.size(0)
+            correct += (preds == labels).sum().item()
+
+    accuracy = 100 * correct / total
+
+    print(f"Model accuracy: {accuracy}")
 
 
 def load_audiomnist(data_dir, train_batch_size: int = 64, test_batch_size: int = 128):
