@@ -35,7 +35,7 @@ def plot_audiomnist(x, y, model):
 
     x = x.clone().detach().cpu()
     if isinstance(y, torch.Tensor):
-        y = y.clone().detach().cpu()
+        y = y.clone().detach().cpu().item()
 
     # use model to compute class scores and predicted label
     y_scores = torch.nn.functional.softmax(
