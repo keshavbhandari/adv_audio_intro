@@ -2,8 +2,10 @@
 <hr/>
 
 <h3 align="center">
-<a href="https://colab.research.google.com/drive/1tb7JnrJHOBP0BkOKWXzP06jYrIXVf3az?usp=sharing">Colab Notebook</a>
+<a href="https://colab.research.google.com/drive/1tb7JnrJHOBP0BkOKWXzP06jYrIXVf3az#offline=true&sandboxMode=true">Colab Notebook</a>
 </h3>
+
+
 
 
 ---
